@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EloraMail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <style>
+/* =================================================================================
+   🎨 THEME CONFIGURATION AREA
+   ================================================================================= */
+:root {
+  /* Defaults */
+  --bg-color: #f4f6f8;
+  --card-bg: #ffffff;
+  --primary: #4e73df;
+  --btn-text: #ffffff;
+  --text-main: #2e384d;
+  --nav-text: #2e384d;
+  --nav-accent: var(--primary);
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --border-color: #e2e8f0;
+  --backdrop-blur: 0px;
+  --bg-image: none;
+  --bg-size: cover;
+  --email-bg: #ffffff;
+  --email-text: #2e384d;
+  --input-bg: rgba(0, 0, 0, 0.03);
+}
+
+/* 1. Theme: Cool */
+body.theme-cool { --bg-color: #f0f8ff; --primary: #4e73df; }
+
+/* 2. Theme: Cute */
+body.theme-cute { --bg-color: #ffe6eb; --primary: #ff6b81; --header-bg: rgba(255, 240, 245, 0.95); --border-color: #fbcfe8; }
+
+/* 3. Theme: Aero (Restored) */
+body.theme-aero {
+  --bg-color: transparent; 
+  --bg-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+  --card-bg: rgba(255, 255, 255, 0.5); 
+  --header-bg: rgba(255, 255, 255, 0.3);
+  --primary: #006064; 
+  --border-color: rgba(255, 255, 255, 0.6);
+  --backdrop-blur: 12px;
+  --email-bg: rgba(255, 255, 255, 0.85);
+}
+
+/* 4. Theme: Metro (Dark) */
+body.theme-metro { 
+  --bg-color: #2d2d30; 
+  --card-bg: #1e1e1e; 
+  --primary: #0078d7; 
+  --text-main: #ffffff; 
+  --nav-text: #ffffff; 
+  --header-bg: #1e1e1e; 
+  --border-color: #444; 
+  --email-bg: #252526; 
+  --email-text: #ffffff;
+  --input-bg: rgba(255,255,255,0.05);
+}
+
+/* 5. Theme: Edgy (Cyberpunk) */
+body.theme-edgy { 
+  --bg-color: #000000; 
+  --card-bg: #111111; 
+  --primary: #00ff41; 
+  --btn-text: #000000;
+  --text-main: #00ff41; 
+  --nav-text: #00ff41; 
+  --header-bg: #000000; 
+  --border-color: #00ff41; 
+  --email-bg: #0a0a0a; 
+  --email-text: #00ff41;
+  --input-bg: rgba(0, 255, 65, 0.1);
+}
+
+/* 6. Theme: Purple Retro */
+body.theme-purple-retro {
+  --bg-color: #2b1055;
+  --bg-image: linear-gradient(180deg, #2b1055 0%, #7597de 100%);
+  --card-bg: #4a235a;
+  --primary: #f890e7;
+  --btn-text: #2b1055;
+  --text-main: #ffffff;
+  --nav-text: #ffffff;
+  --header-bg: rgba(43, 16, 85, 0.9);
+  --border-color: #d88cf6;
+  --backdrop-blur: 10px;
+  --email-bg: #3c1464;
+  --email-text: #ffffff;
+  --input-bg: rgba(248, 144, 231, 0.1);
+}
+
+/* 8. Theme: Blue Techy */
+body.theme-blue-techy {
+  --bg-color: #0b1a2a;
+  --bg-image: linear-gradient(90deg, #0b1a2a 0%, #153450 100%);
+  --card-bg: #153450;
+  --primary: #00d2d3;
+  --btn-text: #0b1a2a;
+  --text-main: #c8d6e5;
+  --nav-text: #c8d6e5;
+  --header-bg: #0b1a2a;
+  --border-color: #22a6b3;
+  --backdrop-blur: 5px;
+  --email-bg: #112233;
+  --email-text: #c8d6e5;
+  --input-bg: rgba(0, 210, 211, 0.1);
+}
+
+/* 9. Theme: Dark Hightech (Revamped) */
+body.theme-dark-hightech {
+  --bg-color: #09090b;
+  --bg-image: radial-gradient(circle at 50% 0%, #18181b 0%, #09090b 70%);
+  --card-bg: #121214;
+  --primary: #00e5ff;
+  --btn-text: #000000;
+  --text-main: #e4e4e7;
+  --nav-text: #e4e4e7;
+  --header-bg: rgba(9, 9, 11, 0.8);
+  --border-color: #27272a;
+  --backdrop-blur: 12px;
+  --email-bg: #09090b;
+  --email-text: #e4e4e7;
+  --input-bg: rgba(0, 229, 255, 0.05);
+}
+
+/* 10. Theme: Yellow Black (Revamped) */
+body.theme-yellow-black {
+  --bg-color: #fce029; 
+  --bg-image: none;
+  --card-bg: #111111;
+  --primary: #fce029;
+  --btn-text: #111111;
+  --text-main: #fce029;
+  --nav-text: #111111;
+  --nav-accent: #111111;
+  --header-bg: #fce029;
+  --border-color: #2a2a2a;
+  --backdrop-blur: 0px;
+  --email-bg: #1a1a1a;
+  --email-text: #ffffff;
+  --input-bg: rgba(252, 224, 41, 0.05);
+}
+
+/* =========================================
+   CRITICAL FIX: Dropdown Option Visibility
+   ========================================= */
+select option {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* =========================================
+   CORE STYLES
+   ========================================= */
+body {
+  background-color: var(--bg-color);
+  background-image: var(--bg-image);
+  background-size: var(--bg-size);
+  background-attachment: fixed;
+  background-position: center;
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  transition: background-image 0.5s, background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.glass-effect { backdrop-filter: blur(var(--backdrop-blur)); -webkit-backdrop-filter: blur(var(--backdrop-blur)); }
+html { scrollbar-width: none; overflow-y: scroll; }
+body { scrollbar-width: none; -ms-overflow-style: none; }
+::-webkit-scrollbar { display: none !important; width: 0px; background: transparent; }
+
+.custom-input { background-color: var(--card-bg); color: var(--text-main); border-color: var(--border-color); }
+.custom-input:focus { outline: none; border-color: var(--primary); }
+
+/* Email Sandbox */
+.email-content-wrapper { font-family: Arial, sans-serif; line-height: 1.6; width: 100%; overflow-x: auto; word-wrap: break-word; overflow-wrap: break-word; }
+.email-content-wrapper table, .email-content-wrapper img, .email-content-wrapper iframe { max-width: 100% !important; height: auto !important; }
+@media only screen and (max-width: 600px) {
+  .email-content-wrapper table, .email-content-wrapper tr, .email-content-wrapper td { display: block !important; width: 100% !important; box-sizing: border-box !important; height: auto !important; }
+  .email-content-wrapper td { padding-left: 0 !important; padding-right: 0 !important; }
+}
+
+/* Modern Theme-Adaptive Loader */
+#loader-overlay { 
+  position: fixed; 
+  inset: 0; 
+  z-index: 9999; 
+  background-color: var(--bg-color); 
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  transition: opacity 0.5s ease-out, visibility 0.5s; 
+}
+#loader-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(var(--backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--backdrop-blur));
+  z-index: -1;
+}
+
+.loader-content {
+  background-color: var(--card-bg);
+  padding: 40px 60px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  transform: translateY(0);
+  animation: loader-entrance 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes loader-entrance {
+  0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.loader-icon-container {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  z-index: 2;
+  animation: bounce-soft 2s infinite ease-in-out;
+}
+
+.loader-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--primary);
+  border-right-color: var(--primary);
+  opacity: 0.8;
+  animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.loader-ring::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-left-color: var(--primary);
+  border-bottom-color: var(--primary);
+  opacity: 0.4;
+  animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse;
+}
+
+.loader-text {
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.loader-dots {
+  display: flex;
+  gap: 2px;
+}
+
+.loader-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  animation: pulse-dot 1.5s infinite;
+}
+.loader-dot:nth-child(2) { animation-delay: 0.2s; }
+.loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+@keyframes bounce-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes pulse-dot { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.5); } }
+  </style>
+
+  <script>
+    var DEFAULT_BRAND = "ZEBEDEE ❤️";
+    var DEFAULT_DOMAINS = "zebedee.lol"; 
+    var APPSCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqdwj2L7GXYIbXe73l1MtW-4kl3ZTdKxjqamyksIGBEFg3P4d5tKPbZYJZUeL0movrig/exec";
+    var API_KEY = "ELORA-VIP-123"; // Give your clients a unique key!
+  </script>
+</head>
+<body class="antialiased">
+  
+  <!-- Apply theme immediately to prevent FOUC on loader -->
+  <script>
+    var savedTheme = localStorage.getItem('selectedTheme');
+    var finalTheme = savedTheme || 'theme-dark-hightech';
+    document.body.className = finalTheme + " antialiased";
+    localStorage.setItem('selectedTheme', finalTheme);
+  </script>
+
+  <div id="loader-overlay">
+    <div class="loader-content">
+      <div class="loader-icon-container">
+        <div class="loader-ring"></div>
+        <i class="ph ph-envelope-simple loader-icon"></i>
+      </div>
+      <div class="loader-text">
+        ELORA<span style="color: var(--primary)">MAIL</span>
+        <div class="loader-dots ml-2">
+          <span class="loader-dot"></span>
+          <span class="loader-dot"></span>
+          <span class="loader-dot"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="glass-effect sticky top-0 z-40 border-b border-gray-200/20 px-5 py-3 flex justify-between items-center" style="background-color: var(--header-bg); border-color: var(--border-color); color: var(--nav-text);">
+    <div class="text-xl font-extrabold tracking-tight flex items-center" id="navbar-brand">
+      <span class="flex items-center" style="line-height: 1;">ELORA<span style="color: var(--nav-accent)">Mail</span></span>
+    </div>
+    
+    <div class="relative flex items-center">
+      <select onchange="setTheme(this.value)" id="themeSelector" 
+              class="appearance-none bg-transparent font-bold text-sm cursor-pointer focus:outline-none text-left pl-2 pr-6 py-1" 
+              style="color: var(--nav-text); z-index: 50;">
+        <option value="theme-cool">Cool</option>
+        <option value="theme-cute">Cute</option>
+        <option value="theme-aero">Aero</option>
+        <option value="theme-metro">Metro</option>
+        <option value="theme-edgy">Edgy</option>
+        <option value="theme-purple-retro">Purple Retro</option>
+        <option value="theme-blue-techy">Blue Techy</option>
+        <option value="theme-dark-hightech">Dark Hightech</option>
+        <option value="theme-yellow-black">Yellow Black</option>
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center" style="color: var(--nav-text); opacity: 0.6;">
+        <i class="ph ph-caret-down text-sm"></i>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-xl mx-auto px-4 mt-6 pb-20 w-full flex-1">
+
+    <div class="glass-effect rounded-2xl shadow-sm p-5 mb-6 transition-colors duration-300" style="background-color: var(--card-bg);">
+      
+      <label class="block text-xs font-bold uppercase opacity-60 mb-2 tracking-wide" style="color: var(--text-main)">My Identity</label>
+      
+      <div class="flex shadow-sm rounded-lg overflow-hidden mb-3 border focus-within:ring-2" style="border-color: var(--border-color); --tw-ring-color: var(--primary);">
+        <input type="text" id="userInput" placeholder="username" class="flex-1 px-4 py-3 border-none focus:outline-none custom-input bg-transparent font-medium" style="min-width: 0; color: var(--text-main);">
+        
+        <div class="relative border-l flex items-center" style="border-color: var(--border-color); background-color: var(--input-bg);">
+          <select id="domainSelect" class="appearance-none h-full pl-4 pr-10 py-3 text-sm font-bold cursor-pointer focus:outline-none bg-transparent" style="color: var(--text-main);">
+             <option disabled selected>Loading...</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 opacity-60">
+            <i class="ph ph-caret-down text-sm" style="color: var(--text-main)"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <button id="btnRandom" onclick="generateRandomAPI()" class="py-2.5 px-4 rounded-lg border text-sm font-semibold transition-colors flex justify-center items-center gap-2 custom-input" style="border-color: var(--border-color); color: var(--text-main);">
+          <i class="ph ph-dice-three text-lg"></i> Random
+        </button>
+        <button id="btnCopy" onclick="copyEmail()" class="py-2.5 px-4 rounded-lg border text-sm font-semibold transition-colors flex justify-center items-center gap-2 custom-input" style="border-color: var(--border-color); color: var(--text-main);">
+          <i class="ph ph-copy text-lg"></i> Copy
+        </button>
+      </div>
+
+      <button id="fetchBtn" onclick="fetchAndDisplay()" class="w-full py-3.5 rounded-lg font-extrabold shadow-md transform active:scale-95 transition-all flex justify-center items-center text-[15px]" style="background-color: var(--primary); color: var(--btn-text);">
+        Check Inbox
+      </button>
+
+      <div id="loadingSpinner" class="hidden text-center mt-3">
+        <i class="ph ph-spinner ph-spin text-2xl" style="color: var(--primary)"></i>
+        <p class="text-xs opacity-60 mt-1 font-semibold" style="color: var(--text-main)">Fetching...</p>
+      </div>
+
+    </div>
+
+    <div id="resultsArea" class="space-y-4"></div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer" class="mt-auto py-6 border-t transition-colors duration-300 glass-effect w-full" style="background-color: var(--header-bg); border-color: var(--border-color); color: var(--nav-text);">
+    <div class="max-w-xl mx-auto px-4 text-center text-sm opacity-80 font-medium">
+      <p>Copyright <a id="brand" href="https://t.me/eloraph" target="_blank" class="font-bold hover:underline transition-all" style="color: inherit;">ELORAHUB ❤️</a> © <span id="year"></span>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="customAlertModal" class="fixed inset-0 z-[999] flex items-center justify-center bg-black/50 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm">
+    <div class="glass-effect rounded-2xl shadow-2xl p-6 w-11/12 max-w-sm transform scale-95 transition-transform duration-300" id="modalContent" style="background-color: var(--card-bg);">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="font-bold text-lg" style="color: var(--text-main)">Alert</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition-colors">
+          <i class="ph ph-x text-lg"></i>
+        </button>
+      </div>
+      <div class="text-sm mb-6 opacity-80" id="customAlertMessage" style="color: var(--text-main)"></div>
+      <div class="text-right">
+        <button onclick="closeModal()" class="px-5 py-2 rounded-lg text-sm font-bold shadow-md transition-colors" style="background-color: var(--primary); color: var(--btn-text);">
+          Okay
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connect to the separated Javascript logic -->
+  <script src="script.js"></script>
+</body>
+</html>
